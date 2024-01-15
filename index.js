@@ -10,7 +10,7 @@ const flash = require('connect-flash');
 const userRoute = require ('./routes/UserRoute')
 
 
-initializePassport(passport);
+
 connectToDatabase();
 
 app.use(express.json());
@@ -23,6 +23,9 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+initializePassport(passport);
+app.use(passport.session());
 app.use("/api/user", userRoute);
 
 app.listen(port, () => {
