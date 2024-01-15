@@ -9,6 +9,7 @@ const initializePassport = require("./config/passport");
 const flash = require('connect-flash');
 const userRoute = require ('./routes/UserRoute')
 
+
 initializePassport(passport);
 connectToDatabase();
 

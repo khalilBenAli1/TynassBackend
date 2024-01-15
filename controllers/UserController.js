@@ -25,7 +25,7 @@ const verifyPassword = async (user, providedPassword) => {
 module.exports = {
   createUser: async (req, res) => {
     try {
-      console.log(req.body);
+        
       const user = new User(req.body);
       await user.save();
       res.status(201).send(`connected ${user}`);
@@ -48,4 +48,8 @@ module.exports = {
       res.status(500).send("Server error");
     }
   },
+  logout:(req, res) => {
+      req.logout();
+      res.redirect("/login");
+    }
 };
