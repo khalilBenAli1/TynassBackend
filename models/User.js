@@ -33,9 +33,12 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'admin', 'moderator'],
     default: 'user'
   },
-  LegalPaper: [String]
-
-
+  LegalPaper: [String],
+  trips: [String],
+  currentTrip:{
+    type: String,
+  },
+  adminTrips:[String]
 });
 
 userSchema.pre('save', hashPassword);
