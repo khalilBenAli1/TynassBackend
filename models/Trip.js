@@ -1,5 +1,5 @@
 const mongoose=require("mongoose")
-
+const Location=require('./Location')
 const tripSchema = new mongoose.Schema({
 
     tripname: {
@@ -20,8 +20,9 @@ const tripSchema = new mongoose.Schema({
     gameOverMsg:{
         type:String,
     },
-    returnLocation:{
-
-    }
+    returnLocation: Location
 
 })
+
+const Trip = mongoose.model('User', tripSchema);
+module.exports = { Trip };
