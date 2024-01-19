@@ -1,31 +1,4 @@
 const mongoose = require("mongoose");
-const Location = require("./Location");
-const Instruction = require("./Instruction");
-const QRCode = require("qrcode");
-
-const qrCodeSchema = new mongoose.Schema({
-    data: {
-        type: String,
-        required: true
-    },
-    associatedTrip: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Trip'
-    },
-    accessCode:{
-        type:String
-    }
-    
-});
-qrCodeSchema.statics.generateQRCodeData = async function(tripId) {
-    try {
-        return await QRCode.toDataURL(tripId.toString());
-    } catch (error) {
-        throw error;
-    }
-};
-
-const QRCodeModel = mongoose.model("QRCode", qrCodeSchema);
 
 const tripSchema = new mongoose.Schema({
   tripname: {
@@ -46,15 +19,25 @@ const tripSchema = new mongoose.Schema({
   gameOverMsg: {
     type: String,
   },
-  returnLocation: Location,
+  returnLocation: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Location'
+  },
   EmergencyContact: String,
-  Instruction: Instruction,
+  Instruction: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Instruction'
+  },
   qrCode: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'QRCode'
-}
+  },
+  participants: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Participant'
+  }]
 });
 
 
 const Trip = mongoose.model("Trip", tripSchema);
-module.exports = { Trip , QRCodeModel };
+module.exports = { Trip};
