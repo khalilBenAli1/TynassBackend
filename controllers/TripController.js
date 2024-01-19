@@ -1,14 +1,14 @@
 const { User } = require("../models/User");
 const { Trip } = require("../models/Trip");
-
+const mongoose=require("mongoose")
 module.exports = {
   // Create A Trip
   createTrip: async (req, res) => {
     try {
-      const userId = req.user._id;
+    const userId = new mongoose.Types.ObjectId(req.body.userId)
       const newTrip = new Trip(req.body);
       const savedTrip = await newTrip.save();
-
+        console.log("user",userId)
       await User.findByIdAndUpdate(userId, {
         $push: { adminTrips: savedTrip._id },
       });
