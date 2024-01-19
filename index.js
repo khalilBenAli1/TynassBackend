@@ -8,6 +8,7 @@ const passport = require("passport");
 const initializePassport = require("./config/passport");
 const flash = require('connect-flash');
 const userRoute = require ('./routes/UserRoute')
+const tripRoute = require ('./routes/TripRoute')
 
 
 
@@ -27,6 +28,7 @@ app.use(
 initializePassport(passport);
 app.use(passport.session());
 app.use("/api/user", userRoute);
+app.use("/api/trip", tripRoute);
 
 app.listen(port, () => {
   console.log(`Server listening at ${port}`);

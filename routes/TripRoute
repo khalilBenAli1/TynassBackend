@@ -10,9 +10,11 @@ const {
     deleteTrip
 } = require("../controllers/TripController");
 
-router.post("/add_trip", createTrip);
-router.get('/get_all_trips', getAllTrips);
-
+router.post("/trips", createTrip);
+router.get("/trips", getAllTrips);
+router.get("/trip/:id", getTripById);
+router.put("/update_trip/:id", updateTrip); 
+router.delete("/delete_trip/:id", deleteTrip);
 
 
 module.exports = router; 
