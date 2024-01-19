@@ -1,1 +1,24 @@
 
+const express = require("express");
+const router = express.Router();
+
+const {
+    createTrip,
+    getAllTrips,
+    getTripById,
+    updateTrip,
+    deleteTrip
+} = require("../controllers/TripController");
+
+router.post("/add_trip", createTrip);
+router.get('/get_all_trips', getAllTrips);
+
+
+
+module.exports = router; 
+
+
+
+
+
+
