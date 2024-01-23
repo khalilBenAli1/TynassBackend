@@ -1,6 +1,6 @@
 const { User } = require("../models/User");
 const passport = require("passport");
-const isAuthenticated=require('../middleware/checkAuth')
+const isAuthenticated = require("../middleware/checkAuth");
 
 module.exports = {
   createUser: async (req, res) => {
@@ -36,11 +36,32 @@ module.exports = {
     res.redirect("/login");
   },
 
-  checkAuth:(req, res) => {
+  checkAuth: (req, res) => {
     if (req.isAuthenticated()) {
-        res.send('User is authenticated');
+      res.send("User is authenticated");
     } else {
-        res.send('User is not authenticated');
-    }}
+      res.send("User is not authenticated");
+    }
+  },
+  getTrips: async (req, res) => {
+    try {
+      const userId = req.user._id; 
+      const user = await User.findById(userId).populate("trips");
+      res.status(200).json(user.trips);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Server error");
+    }
+  },
 
+  getAdminTrips: async (req, res) => {
+    try {
+      const userId = req.user._id; 
+      const user = await User.findById(userId).populate("adminTrips");
+      res.status(200).json(user.adminTrips);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Server error");
+    }
+  },
 };
