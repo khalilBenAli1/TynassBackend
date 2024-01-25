@@ -26,7 +26,7 @@ module.exports = {
         if (err) {
           return next(err);
         }
-        return res.status(200).send(`connected ${user}`);
+        return res.status(200).send(user);
       });
     })(req, res, next);
   },
