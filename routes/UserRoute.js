@@ -1,19 +1,21 @@
 const express = require("express");
 const router = express.Router();
-
+const isAuthenticated=require('../middleware/checkAuth')
 const {
   createUser,
   LoginUser,
   logout,
-  checkAuth
+  checkAuth,
+  getTrips,
+  getAdminTrips,
 } = require("../controllers/UserController");
 
 router.post("/add", createUser);
 router.post('/login', LoginUser);
 router.get('/logout', logout);
 router.get('/check-authentication',checkAuth);
-router.get("/trips", isAuthenticated, userController.getTrips);
-router.get("/admin-trips", isAuthenticated, userController.getAdminTrips);
+router.get("/trips", isAuthenticated, getTrips);
+router.get("/admin-trips", isAuthenticated, getAdminTrips);
 
 
 module.exports = router; 
