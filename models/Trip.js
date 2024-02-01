@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const QRCode = require("qrcode");
 
 const tripSchema = new mongoose.Schema({
   tripname: {
@@ -29,8 +30,11 @@ const tripSchema = new mongoose.Schema({
     ref: 'Instruction'
   },
   qrCode: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'QRCode'
+    data: String,
+    createdAt: {
+      type: Date,
+      default: Date.now
+    },
   },
   participants: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -38,6 +42,15 @@ const tripSchema = new mongoose.Schema({
   }]
 });
 
+tripSchema.methods.generateQRCode = async function() {
+  try {
+    const qrData = await QRCode.toDataURL(this._id.toString());
+    this.qrCode = { data: qrData };
+  } catch (error) {
+    console.error("Error generating QR code:", error);
+    throw error;
+  }
+};
 
 const Trip = mongoose.model("Trip", tripSchema);
 module.exports = {Trip};

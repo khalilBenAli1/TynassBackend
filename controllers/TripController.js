@@ -1,5 +1,6 @@
 const { User } = require("../models/User");
 const { Trip } = require("../models/Trip");
+
 const mongoose=require("mongoose")
 module.exports = {
   // Create A Trip
@@ -7,11 +8,13 @@ module.exports = {
     try {
     const userId = new mongoose.Types.ObjectId(req.body.userId)
       const newTrip = new Trip(req.body);
+      await newTrip.generateQRCode();
+      newTrip.qrCode.createdAt = new Date();
       const savedTrip = await newTrip.save();
-        console.log("user",userId)
       await User.findByIdAndUpdate(userId, {
         $push: { adminTrips: savedTrip._id },
       });
+      
 
       res.status(201).json(savedTrip);
     } catch (error) {
