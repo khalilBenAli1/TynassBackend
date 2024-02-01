@@ -32,20 +32,28 @@ module.exports = {
   },
 
   logout: (req, res) => {
-    req.logout();
-    res.redirect("/login");
+    req.logout((err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send("Error during logout");
+      }
+      res.status(200).send("Logged out successfully");
+    });
   },
 
   checkAuth: (req, res) => {
     if (req.isAuthenticated()) {
-      res.send("User is authenticated");
+      res.json({ 
+        isAuthenticated: true, 
+        user: req.user
+    });
     } else {
       res.send("User is not authenticated");
     }
   },
   getTrips: async (req, res) => {
     try {
-      const userId = req.user._id; 
+      const userId = req.user._id;
       const user = await User.findById(userId).populate("trips");
       res.status(200).json(user.trips);
     } catch (error) {
@@ -56,7 +64,7 @@ module.exports = {
 
   getAdminTrips: async (req, res) => {
     try {
-      const userId = req.user._id; 
+      const userId = req.user._id;
       const user = await User.findById(userId).populate("adminTrips");
       res.status(200).json(user.adminTrips);
     } catch (error) {
