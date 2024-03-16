@@ -5,7 +5,7 @@ const instructionSchema = new mongoose.Schema({
     type:String,
     required:true
   },
-  Rules:{
+  rules:{
     type:[String],
     required:true
   }
