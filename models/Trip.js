@@ -1,13 +1,9 @@
 const mongoose = require("mongoose");
 const QRCode = require("qrcode");
-
+const missionSchema = require('./mission');
+const instructionSchema =require('./Instruction')
 const tripSchema = new mongoose.Schema({
   tripType: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  quizType: {
     type: String,
     required: true,
     trim: true,
@@ -35,10 +31,7 @@ const tripSchema = new mongoose.Schema({
     ref: 'Location'
   },
   EmergencyContact: String,
-  Instruction: [{ 
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Instruction'
-  }],
+  instruction: [instructionSchema],
   qrCode: {
     data: String,
     createdAt: {
@@ -49,7 +42,8 @@ const tripSchema = new mongoose.Schema({
   participants: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Participant'
-  }]
+  }],
+  missions: [missionSchema]
 });
 
 tripSchema.methods.generateQRCode = async function() {

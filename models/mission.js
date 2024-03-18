@@ -8,13 +8,19 @@ const missionSchema = new mongoose.Schema({
     scorePoint: Number,
     experienceURL: String,
     difficulty: String,
-    long: Number,
-    lat: Number,
+    long: String,
+    lat: String,
     hint: String,
     hintCost: Number,
     coverImage: String,
     missionImage: String,
     mediaType: String,
+    arabeAudio:String,
+    englishAudio:String,
+    frenchAudio:String,
+    mediaType:String,
+    quizType:String
+
 });
 
 module.exports = missionSchema;

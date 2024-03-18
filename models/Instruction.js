@@ -12,5 +12,5 @@ const instructionSchema = new mongoose.Schema({
 });
 
 
-const Instruction = mongoose.model('Instruction', instructionSchema);
-module.exports = { Instruction };
+
+module.exports =  instructionSchema ;
