@@ -36,6 +36,7 @@ app.use(passport.session());
 app.use("/api/user", userRoute);
 app.use("/api/trip", tripRoute);
 
+
 app.listen(port, () => {
   console.log(`Server listening at ${port}`);
 });
