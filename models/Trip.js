@@ -41,7 +41,6 @@ const tripSchema = new mongoose.Schema({
   },
   accessCode: {
     type: String,
-    required: true,
     unique: true
 },
   participants: [{
@@ -53,7 +52,7 @@ const tripSchema = new mongoose.Schema({
 
 function generateUniqueCode() {
   let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const charactersLength = characters.length;
   for ( let i = 0; i < 5; i++ ) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));

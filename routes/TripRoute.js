@@ -18,7 +18,7 @@ router.post("/trips", createTrip);
 router.get("/trips", getAllTrips);
 
 // Route for getting a specific trip by ID
-router.get("/trip/:id", getTripById);
+router.get("/:id", getTripById);
 
 // Route for updating a specific trip
 router.put("/update_trip/:id", updateTrip);
@@ -27,9 +27,9 @@ router.put("/update_trip/:id", updateTrip);
 router.delete("/delete_trip/:id", deleteTrip);
 
 // Route for adding participants to a trip
-router.post("/trip/:id/add_participants", addParticipantsToTrip);
+router.post("/:id/add_participants", addParticipantsToTrip);
 
 // Route for getting a trip with Acces Code
-router.get("/trips", accesCode);
+router.get("/trip/:accessCode", accesCode);
 
 module.exports = router;

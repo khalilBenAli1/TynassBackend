@@ -1,6 +1,7 @@
 const { User } = require("../models/User");
 const passport = require("passport");
 const isAuthenticated = require("../middleware/checkAuth");
+const { Trip } = require('../models/Trip');
 
 module.exports = {
   createUser: async (req, res) => {
@@ -65,8 +66,14 @@ module.exports = {
   getAdminTrips: async (req, res) => {
     try {
       const userId = req.user._id;
-      const user = await User.findById(userId).populate("adminTrips");
-      res.status(200).json(user.adminTrips);
+      const user = await User.findById(userId);
+      const tripDetails = await Promise.all(
+        user.adminTrips.map(async (tripId) => {
+          return await Trip.findById(tripId);
+        })
+      );
+
+      res.status(200).json(tripDetails);
     } catch (error) {
       console.log(error);
       res.status(500).send("Server error");

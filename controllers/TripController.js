@@ -97,7 +97,6 @@ module.exports = {
   },
   // Method to get Access Code of a trip
   accesCode: async (req, res) => {
-    app.get('/api/trips/:accessCode', async (req, res) => {
       try {
           const trip = await Trip.findOne({ accessCode: req.params.accessCode });
           if (!trip) {
@@ -107,7 +106,5 @@ module.exports = {
       } catch (error) {
           res.status(500).send('Server error');
       }
-  });
   },
-  
 };
