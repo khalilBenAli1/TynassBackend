@@ -39,11 +39,41 @@ const tripSchema = new mongoose.Schema({
       default: Date.now
     },
   },
+  accessCode: {
+    type: String,
+    required: true,
+    unique: true
+},
   participants: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Participant'
   }],
   missions: [missionSchema]
+});
+
+function generateUniqueCode() {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  for ( let i = 0; i < 5; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+tripSchema.pre('save', async function (next) {
+  if (this.isNew || !this.accessCode) {
+      let unique = false;
+      let uniqueCode;
+      while (!unique) {
+          uniqueCode = generateUniqueCode();
+          const existingTripWithCode = await mongoose.models.Trip.findOne({ accessCode: uniqueCode });
+          if (!existingTripWithCode) {
+              unique = true;
+          }
+      }
+      this.accessCode = uniqueCode;
+  }
+  next();
 });
 
 tripSchema.methods.generateQRCode = async function() {

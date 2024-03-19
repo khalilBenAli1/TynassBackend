@@ -95,4 +95,19 @@ module.exports = {
       res.status(400).json({ message: error.message });
     }
   },
+  // Method to get Access Code of a trip
+  accesCode: async (req, res) => {
+    app.get('/api/trips/:accessCode', async (req, res) => {
+      try {
+          const trip = await Trip.findOne({ accessCode: req.params.accessCode });
+          if (!trip) {
+              return res.status(404).send('Trip not found.');
+          }
+          res.json(trip);
+      } catch (error) {
+          res.status(500).send('Server error');
+      }
+  });
+  },
+  
 };
