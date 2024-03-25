@@ -65,8 +65,13 @@ module.exports = {
 
   getAdminTrips: async (req, res) => {
     try {
-      const userId = req.user._id;
+      const { userId } = req.body;
       const user = await User.findById(userId);
+      if (!user) {
+        console.log(userId)
+        return res.status(404).send('User not found.');
+      }
+
       const tripDetails = await Promise.all(
         user.adminTrips.map(async (tripId) => {
           return await Trip.findById(tripId);

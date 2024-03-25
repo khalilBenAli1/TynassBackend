@@ -15,7 +15,7 @@ router.post('/login', LoginUser);
 router.get('/logout', logout);
 router.get('/check-authentication',checkAuth);
 router.get("/trips", isAuthenticated, getTrips);
-router.get("/admin-trips", isAuthenticated, getAdminTrips);
+router.post("/admin-trips", getAdminTrips);
 
 
 module.exports = router; 

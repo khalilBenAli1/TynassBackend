@@ -48,7 +48,12 @@ const tripSchema = new mongoose.Schema({
     ref: 'Participant'
   }],
   missions: [missionSchema]
-});
+
+},
+{
+  timestamps: true,
+}
+);
 
 function generateUniqueCode() {
   let result = '';

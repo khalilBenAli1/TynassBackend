@@ -28,6 +28,10 @@ app.use(
     secret: "secret",
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      sameSite: 'none',
+      secure: true,
+    }
   })
 );
 
