@@ -20,16 +20,14 @@ const tripSchema = new mongoose.Schema({
   startingDate: {
     type: Date,
   },
-  fixedDate: {
-    type: Date,
-  },
-  gameOverMsg: {
+  fixedTime: {
     type: String,
   },
-  returnLocation: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Location'
+  gameOverMessage: {
+    type: String,
   },
+  latitude: Number,
+  longitude: Number,
   EmergencyContact: String,
   instruction: [instructionSchema],
   qrCode: {
@@ -47,7 +45,11 @@ const tripSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Participant'
   }],
-  missions: [missionSchema]
+  missions: [missionSchema],
+  memoryMail: {
+    type: [String],
+  },
+
 
 },
 {
