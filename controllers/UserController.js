@@ -84,4 +84,25 @@ module.exports = {
       res.status(500).send("Server error");
     }
   },
+  updateSplashScreen: async (req, res) => {
+    const { userId } = req.params;
+    const { splashText, splashColor, splashImage } = req.body;
+
+    try {
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).send('User not found.');
+      }
+      user.splashText = splashText;
+      user.splashColor = splashColor;
+      user.splashImage = splashImage;
+
+      await user.save();
+
+      res.status(200).json({ message: "Splash screen updated successfully", user });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Server error");
+    }
+  },
 };

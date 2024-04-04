@@ -8,6 +8,7 @@ const {
   checkAuth,
   getTrips,
   getAdminTrips,
+  updateSplashScreen
 } = require("../controllers/UserController");
 
 router.post("/add", createUser);
@@ -16,7 +17,7 @@ router.get('/logout', logout);
 router.get('/check-authentication',checkAuth);
 router.get("/trips", isAuthenticated, getTrips);
 router.post("/admin-trips", getAdminTrips);
-
+router.post("/updateSplashScreen/:userId", updateSplashScreen);
 
 module.exports = router; 
 

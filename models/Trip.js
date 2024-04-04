@@ -49,7 +49,7 @@ const tripSchema = new mongoose.Schema({
   memoryMail: {
     type: [String],
   },
-
+  
 
 },
 {

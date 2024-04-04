@@ -4,8 +4,10 @@ const participantSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
     },
+    team:String,
+    score:String,
+    accomplishedMissions:String,
 });
 
 const Participant = mongoose.model('Participant', participantSchema);

@@ -19,8 +19,8 @@ const missionSchema = new mongoose.Schema({
     englishAudio:String,
     frenchAudio:String,
     mediaType:String,
-    quizType:String
-
+    quizType:String,
+    accomplished:Boolean
 });
 
 module.exports = missionSchema;
