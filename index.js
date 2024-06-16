@@ -1,7 +1,7 @@
 const express = require("express");
 const { connectToDatabase } = require("./config/database");
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const cors = require("cors");
 const session = require('express-session');
 const passport = require("passport");
