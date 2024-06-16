@@ -16,7 +16,7 @@ connectToDatabase();
 
 app.use(express.json());
 const corsOptions = {
-  origin: 'http://localhost:3000', 
+  origin: 'http://tynassit.com', 
   credentials: true, 
   optionsSuccessStatus: 200 
 };
