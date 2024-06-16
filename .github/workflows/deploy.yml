@@ -28,7 +28,7 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-          cd /path/to/your/project
+          cd /var/www/backend/TynassBackend
           git pull origin main
           npm install  # Remove --production unless you are sure
           pm2 restart all
