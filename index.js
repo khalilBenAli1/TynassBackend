@@ -13,7 +13,7 @@ const tripRoute = require ('./routes/TripRoute')
 
 
 connectToDatabase();
-
+const test ="test";
 app.use(express.json());
 const corsOptions = {
   origin: 'http://tynassit.com', 
