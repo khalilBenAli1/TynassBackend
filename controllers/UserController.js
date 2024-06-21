@@ -43,14 +43,13 @@ module.exports = {
   },
 
   checkAuth: (req, res) => {
-    console.log("Session ID:", req.sessionID);
-    console.log("Session:", req.session);
     if (req.isAuthenticated()) {
-      console.log("User is authenticated:", req.user);
-      res.json({ isAuthenticated: true, user: req.user });
+      res.json({ 
+        isAuthenticated: true, 
+        user: req.user
+    });
     } else {
-      console.log("User is not authenticated");
-      res.json({ isAuthenticated: false });
+      res.send("User is not authenticated");
     }
   },
   getTrips: async (req, res) => {
