@@ -13,7 +13,7 @@ const tripRoute = require ('./routes/TripRoute')
 
 
 connectToDatabase();
-const test ="test3";
+
 app.use(express.json());
 const corsOptions = {
   origin: 'http://srv417723.hstgr.cloud:3000', 
@@ -30,7 +30,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       sameSite: 'none',
-      secure: true,
+      secure: false,
     }
   })
 );
