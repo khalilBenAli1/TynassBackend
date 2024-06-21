@@ -2,6 +2,12 @@ const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const bcrypt = require("bcrypt");
 const { User } = require("../models/User");
+const jwt = require('jsonwebtoken');
+
+const generateToken = (user) => {
+  return jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+};
+
 
 function initialize(passport) {
   const authenticateUser = async (email, password, done) => {
@@ -27,10 +33,7 @@ function initialize(passport) {
   passport.deserializeUser(async (id, done) => {
     try {
       const user = await User.findById(id);
-    
-      const token = generateToken(user);
-
-      return done(null, { user, token });
+      done(null, user);
     } catch (err) {
       done(err, null);
     }
@@ -53,6 +56,7 @@ function initialize(passport) {
         });
         await user.save();
       }
+
       const userWithToken = { ...user.toObject(), token: accessToken };
 
       return done(null, userWithToken);
