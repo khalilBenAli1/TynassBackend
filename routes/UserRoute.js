@@ -28,7 +28,6 @@ router.get('/auth/google/callback',
   (req, res) => {
    const token =req.user.token
    res.redirect(`exp://192.168.0.214:8081?token=${token}`)
-   
   });
 
 module.exports = router; 
