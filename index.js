@@ -36,6 +36,7 @@ app.use(
 );
 
 initializePassport(passport);
+app.use(passport.initialize()); 
 app.use(passport.session());
 app.use("/api/user", userRoute);
 app.use("/api/trip", tripRoute);
