@@ -12,8 +12,7 @@ const userSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      default:
-        "https://www.nicepng.com/png/full/933-9332131_profile-picture-default-png.png",
+      default: "https://www.nicepng.com/png/full/933-9332131_profile-picture-default-png.png",
     },
     email: {
       type: String,
@@ -24,11 +23,20 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: function() {
+        return !this.googleId; // Make password optional if googleId is present
+      },
     },
     phoneNumber: {
       type: Number,
-      required: true,
+      required: function() {
+        return !this.googleId; // Make phoneNumber optional if googleId is present
+      },
+    },
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true,
     },
     role: {
       type: String,
@@ -43,15 +51,15 @@ const userSchema = new mongoose.Schema(
     adminTrips: [String],
     splashText: {
       type: String,
-      default: ''
+      default: '',
     },
     splashColor: {
       type: String,
-      default: '#FFFFFF'
+      default: '#FFFFFF',
     },
     splashImage: {
       type: String,
-      default: ''
+      default: '',
     },
   },
   {
@@ -62,4 +70,3 @@ const userSchema = new mongoose.Schema(
 userSchema.pre("save", hashPassword);
 const User = mongoose.model("User", userSchema);
 module.exports = { User };
-("");
