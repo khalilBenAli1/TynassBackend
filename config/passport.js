@@ -59,8 +59,10 @@ function initialize(passport) {
         });
         await user.save();
       }
+      const token = generateToken(user);
+      const userWithToken = { ...user.toObject(), token };
 
-      return done(null, user);
+      return done(null, userWithToken);
     } catch (err) {
       return done(err, false);
     }
