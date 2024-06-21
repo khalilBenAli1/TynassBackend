@@ -52,9 +52,8 @@ function initialize(passport) {
         });
         await user.save();
       }
-      const userWithToken = { ...user.toObject(), token: accessToken };
-
-      return done(null, userWithToken);
+      user.token = accessToken;
+      return done(null, user);
     } catch (err) {
       return done(err, false);
     }
