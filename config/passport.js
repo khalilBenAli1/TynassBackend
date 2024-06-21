@@ -2,11 +2,6 @@ const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const bcrypt = require("bcrypt");
 const { User } = require("../models/User");
-const jwt = require('jsonwebtoken');
-
-const generateToken = (user) => {
-  return jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-};
 
 
 function initialize(passport) {
@@ -38,6 +33,7 @@ function initialize(passport) {
       done(err, null);
     }
   });
+
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -56,7 +52,6 @@ function initialize(passport) {
         });
         await user.save();
       }
-
       const userWithToken = { ...user.toObject(), token: accessToken };
 
       return done(null, userWithToken);
