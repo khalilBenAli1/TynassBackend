@@ -10,8 +10,6 @@ const flash = require('connect-flash');
 const userRoute = require ('./routes/UserRoute')
 const tripRoute = require ('./routes/TripRoute')
 
-
-
 connectToDatabase();
 
 app.use(express.json());
@@ -35,12 +33,12 @@ app.use(
   })
 );
 
-initializePassport(passport);
-app.use(passport.initialize()); 
+app.use(passport.initialize());
 app.use(passport.session());
+initializePassport(passport);
+
 app.use("/api/user", userRoute);
 app.use("/api/trip", tripRoute);
-
 
 app.listen(port, () => {
   console.log(`Server listening at ${port}`);

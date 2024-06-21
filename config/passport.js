@@ -3,7 +3,6 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const bcrypt = require("bcrypt");
 const { User } = require("../models/User");
 
-
 function initialize(passport) {
   const authenticateUser = async (email, password, done) => {
     const user = await User.findOne({ email }).exec();
@@ -39,7 +38,6 @@ function initialize(passport) {
     }
   });
 
-
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -59,6 +57,7 @@ function initialize(passport) {
         await user.save();
       }
       user.token = accessToken;
+      console.log("Authenticated with Google, user:", user);
       return done(null, user);
     } catch (err) {
       return done(err, false);

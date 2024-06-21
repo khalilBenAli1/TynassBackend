@@ -43,6 +43,9 @@ module.exports = {
   },
 
   checkAuth: (req, res) => {
+    console.log("Session ID:", req.sessionID);
+    console.log("Session:", req.session);
+    console.log("User:", req.user);
     if (req.isAuthenticated()) {
       res.json({ 
         isAuthenticated: true, 
