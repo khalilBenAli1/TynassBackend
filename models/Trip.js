@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const QRCode = require("qrcode");
 const missionSchema = require('./mission');
 const instructionSchema = require('./Instruction');
-const teamSchema = require('./team'); // Import the team schema
+const teamSchema = require('./team');
 
 const tripSchema = new mongoose.Schema({
   tripType: {
