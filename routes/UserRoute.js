@@ -26,7 +26,7 @@ passport.authenticate('google', { scope: ['profile', 'email'] }));
 router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    const userJson = encodeURIComponent(JSON.stringify(user));
+    const userJson = encodeURIComponent(JSON.stringify(req.user));
     res.redirect(`exp://192.168.0.214:8081?user=${userJson}`);
   });
 
