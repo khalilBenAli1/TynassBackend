@@ -8,7 +8,8 @@ const {
   updateTrip,
   deleteTrip,
   addParticipantsToTrip,
-  accesCode
+  accesCode,
+  addParticipantToTeam
 } = require("../controllers/TripController");
 
 // Route for creating a new trip
@@ -31,5 +32,7 @@ router.post("/:id/add_participants", addParticipantsToTrip);
 
 // Route for getting a trip with Acces Code
 router.get("/trip/:accessCode", accesCode);
+
+router.post("/add-participant", addParticipantToTeam);
 
 module.exports = router;

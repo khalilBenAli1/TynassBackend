@@ -107,4 +107,20 @@ module.exports = {
           res.status(500).send('Server error');
       }
   },
+  addParticipantToTeam: async (req, res) => {
+    const { tripId, participantId, teamName } = req.body;
+
+    try {
+      const trip = await Trip.findById(tripId);
+      if (!trip) {
+        return res.status(404).send('Trip not found');
+      }
+
+      await trip.addParticipantToTeam(participantId, teamName);
+      res.status(200).send(`Participant added to team ${teamName}`);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Server error");
+    }
+  }
 };
