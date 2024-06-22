@@ -56,9 +56,9 @@ function initialize(passport) {
         });
         await user.save();
       }
-      user.token = accessToken;
-      console.log("Authenticated with Google, user:", user);
-      return done(null, user);
+
+     const userData = { ...user.toObject(), accessToken }
+      return done(null, userData);
     } catch (err) {
       return done(err, false);
     }
