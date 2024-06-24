@@ -27,7 +27,7 @@ router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     const userJson = encodeURIComponent(JSON.stringify(req.user));
-    res.redirect(`exp://192.168.0.214:8081?user=${userJson}`);
+    res.redirect(`exp://192.168.0.49:8081?user=${userJson}`);
   });
 
 module.exports = router; 
