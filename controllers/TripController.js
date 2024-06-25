@@ -116,7 +116,28 @@ module.exports = {
         return res.status(404).send('Trip not found');
       }
 
-      await trip.addParticipantToTeam(participantId, teamName);
+
+      trip.teams.forEach(team => {
+        const index = team.participants.indexOf(participantId);
+        if (index !== -1) {
+          team.participants.splice(index, 1);
+        }
+      });
+
+      const team = trip.teams.find(team => team.teamName === teamName);
+      if (team) {
+        team.participants.push(participantId);
+      } else {
+        return res.status(404).send('Team not found');
+      }
+
+      await trip.save();
+
+
+      const io = req.app.get('io');
+
+      io.emit('teamChange', { tripId, teams: trip.teams });
+
       res.status(200).send(`Participant added to team ${teamName}`);
     } catch (error) {
       console.log(error);
