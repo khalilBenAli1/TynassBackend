@@ -16,10 +16,15 @@ const tripSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
   },
-  teamNumber: {
-    type: Number,
+  teams: {
+    type: [teamSchema],
+    validate: {
+      validator: function(v) {
+        return v.length === 2;
+      },
+      message: props => `There should be exactly two teams!`
+    },
   },
-  teams: [teamSchema], // Add the teams schema
   startingDate: {
     type: Date,
   },
