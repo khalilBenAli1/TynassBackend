@@ -144,13 +144,24 @@ module.exports = {
       res.status(500).send("Server error");
     }
   },
-  getParticipants:async (req, res) => {
-    const { participantIds } = req.body;
+  getParticipants: async (req, res) => {
+    const { tripId, teamName } = req.body;
+  
     try {
-      const participants = await User.find({ _id: { $in: participantIds } });
+      const trip = await Trip.findById(tripId);
+      if (!trip) {
+        return res.status(404).send('Trip not found');
+      }
+  
+      const team = trip.teams.find(team => team.teamName === teamName);
+      if (!team) {
+        return res.status(404).send('Team not found');
+      }
+  
+      const participants = await User.find({ _id: { $in: team.participants } });
       res.status(200).json({ participants });
     } catch (error) {
       res.status(500).json({ message: "Error fetching participants", error });
     }
-  }
+  };
 };

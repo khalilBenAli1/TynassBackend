@@ -37,4 +37,5 @@ router.get("/trip/:accessCode", accesCode);
 router.post("/add-participant", addParticipantToTeam);
 
 router.post('/get-participants',getParticipants);
+
 module.exports = router;
