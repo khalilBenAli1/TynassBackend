@@ -1,7 +1,7 @@
 const express = require("express");
 const { connectToDatabase } = require("./config/database");
-const http = require("http");
-const socketIo = require("socket.io");
+const http = require('http');
+const { Server } = require('socket.io');
 const app = express();
 const port = process.env.PORT || 3001;
 const cors = require("cors");
@@ -43,25 +43,22 @@ app.use("/api/user", userRoute);
 app.use("/api/trip", tripRoute);
 const server = http.createServer(app);
 
-// Set up Socket.IO
-const io = socketIo(server, {
+const io = new Server(server, {
   cors: {
     origin: 'http://srv417723.hstgr.cloud:3000',
-    methods: ['GET', 'POST'],
-    credentials: true
+    methods: ["GET", "POST"]
   }
 });
 
-// Set up Socket.IO event listeners
 io.on('connection', (socket) => {
   console.log('A user connected');
-
   socket.on('disconnect', () => {
-    console.log('A user disconnected');
+    console.log('User disconnected');
   });
 });
 
 app.set('io', io);
+
 app.listen(port, () => {
   console.log(`Server listening at ${port}`);
 });

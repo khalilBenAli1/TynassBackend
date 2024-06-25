@@ -143,5 +143,14 @@ module.exports = {
       console.log(error);
       res.status(500).send("Server error");
     }
+  },
+  getParticipants:async (req, res) => {
+    const { participantIds } = req.body;
+    try {
+      const participants = await User.find({ _id: { $in: participantIds } });
+      res.status(200).json({ participants });
+    } catch (error) {
+      res.status(500).json({ message: "Error fetching participants", error });
+    }
   }
 };
