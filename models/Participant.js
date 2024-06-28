@@ -6,8 +6,14 @@ const participantSchema = new mongoose.Schema({
         ref: 'User',
     },
     team:String,
-    score:String,
-    accomplishedMissions:String,
+    score: {
+        type: Number,
+        default: 0,
+    },
+    accomplishedMissions: {
+        type: [String],
+        default: [],
+    },
 });
 
 const Participant = mongoose.model('Participant', participantSchema);

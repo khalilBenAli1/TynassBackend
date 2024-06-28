@@ -1,6 +1,5 @@
 const { User } = require("../models/User");
 const passport = require("passport");
-const isAuthenticated = require("../middleware/checkAuth");
 const { Trip } = require('../models/Trip');
 
 module.exports = {
