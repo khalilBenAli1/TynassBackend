@@ -27,7 +27,6 @@ const missionSchema = new mongoose.Schema({
     accomplished: { type: Boolean, default: false },
     answers: { type: [answerSchema], default: undefined },
     numberOfTrials: { type: Number, default: null },
-    costPoint: { type: Number, default: null }
 }, { timestamps: true });
 
 module.exports = missionSchema;
