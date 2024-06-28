@@ -27,4 +27,4 @@ teamSchema.methods.calculateScore = async function () {
   await this.save();
 };
 
-module.exports = mongoose.model('Team', teamSchema);
+module.exports = teamSchema;
