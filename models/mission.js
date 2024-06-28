@@ -7,10 +7,10 @@ const answerSchema = new mongoose.Schema({
 
 const missionSchema = new mongoose.Schema({
     missionName: { type: String, required: true },
-    description: { type: String, required: true },
+    description: { type: String, default: null },
     codeSolution: { type: String, default: null },
     time: { type: Number, default: null },
-    scorePoint: { type: Number, required: true },
+    scorePoint: { type: Number, default: 0 },
     experienceURL: { type: String, default: null },
     difficulty: { type: String, default: null },
     long: { type: String, default: null },
