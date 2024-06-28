@@ -24,13 +24,13 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: function() {
-        return !this.googleId; // Make password optional if googleId is present
+        return !this.googleId;
       },
     },
     phoneNumber: {
       type: Number,
       required: function() {
-        return !this.googleId; // Make phoneNumber optional if googleId is present
+        return !this.googleId;
       },
     },
     googleId: {
