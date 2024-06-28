@@ -10,7 +10,9 @@ const {
   addParticipantsToTrip,
   accesCode,
   addParticipantToTeam,
-  getParticipants
+  getParticipants,
+  updateParticipantScore,
+  calculateTeamScores
 } = require("../controllers/TripController");
 
 // Route for creating a new trip
@@ -36,6 +38,10 @@ router.get("/trip/:accessCode", accesCode);
 
 router.post("/add-participant", addParticipantToTeam);
 
+router.post('/update-participant', updateParticipantScore);
+
 router.post('/get-participants',getParticipants);
+
+router.post('/calculate-team-scores/:tripId', calculateTeamScores);
 
 module.exports = router;
