@@ -1,5 +1,6 @@
 const { User } = require("../models/User");
 const { Trip } = require("../models/Trip");
+const { Participant } = require("../models/Participant");
 
 const mongoose=require("mongoose")
 module.exports = {
