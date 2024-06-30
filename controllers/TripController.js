@@ -177,7 +177,7 @@ module.exports = {
       const { tripId, teamName } = req.body;
     
       try {
-        const trip = await Trip.findById(tripId);
+        const trip = await Trip.findById(tripId).populate('teams.participants');
         if (!trip) {
           console.log('Trip not found');
           return res.status(404).send('Trip not found');
@@ -191,7 +191,7 @@ module.exports = {
     
         console.log('Team participants:', team.participants);
     
-        const participants = await User.find({ _id: { $in: team.participants } });
+        const participants = await Participant.find({ _id: { $in: team.participants } }).populate('userId');
         console.log('Found participants:', participants);
     
         res.status(200).json({ participants });
