@@ -173,26 +173,33 @@ module.exports = {
       }
     },
 
-  getParticipants: async (req, res) => {
-    const { tripId, teamName } = req.body;
-  
-    try {
-      const trip = await Trip.findById(tripId);
-      if (!trip) {
-        return res.status(404).send('Trip not found');
+    getParticipants: async (req, res) => {
+      const { tripId, teamName } = req.body;
+    
+      try {
+        const trip = await Trip.findById(tripId);
+        if (!trip) {
+          console.log('Trip not found');
+          return res.status(404).send('Trip not found');
+        }
+    
+        const team = trip.teams.find(team => team.teamName === teamName);
+        if (!team) {
+          console.log('Team not found');
+          return res.status(404).send('Team not found');
+        }
+    
+        console.log('Team participants:', team.participants);
+    
+        const participants = await User.find({ _id: { $in: team.participants } });
+        console.log('Found participants:', participants);
+    
+        res.status(200).json({ participants });
+      } catch (error) {
+        console.log('Error fetching participants:', error);
+        res.status(500).json({ message: "Error fetching participants", error });
       }
-  
-      const team = trip.teams.find(team => team.teamName === teamName);
-      if (!team) {
-        return res.status(404).send('Team not found');
-      }
-  
-      const participants = await User.find({ _id: { $in: team.participants } });
-      res.status(200).json({ participants });
-    } catch (error) {
-      res.status(500).json({ message: "Error fetching participants", error });
-    }
-  },
+    },
   calculateTeamScores:async (req, res) => {
     const { tripId } = req.params;
   
