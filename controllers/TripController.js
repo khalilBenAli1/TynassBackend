@@ -145,6 +145,7 @@ module.exports = {
   
       const io = req.app.get('io');
       io.emit('teamChange', { tripId, teams: trip.teams });
+      console.log('Emitting participantJoined event', { tripId, teamName, participantId });
       io.emit('participantJoined', { tripId, teamName, participantId });
   
       res.status(200).send(`Participant added to team ${teamName}`);
@@ -152,7 +153,7 @@ module.exports = {
       console.log(error);
       res.status(500).send("Server error");
     }
-  },
+  };
   
   
     updateParticipantScore: async (req, res) => {
