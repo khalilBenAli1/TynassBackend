@@ -6,9 +6,6 @@ const userSchema = new mongoose.Schema(
     username: {
       type: String,
       required: true,
-      unique: function() {
-        return !this.googleId;
-      },
       trim: true,
       lowercase: true,
     },
