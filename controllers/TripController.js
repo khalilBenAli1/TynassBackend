@@ -108,50 +108,52 @@ module.exports = {
           res.status(500).send('Server error');
       }
   },
-    addParticipantToTeam: async (req, res) => {
-      const { tripId, participantId, teamName } = req.body;
+  addParticipantToTeam: async (req, res) => {
+    const { tripId, participantId, teamName } = req.body;
   
-      try {
-        const trip = await Trip.findById(tripId);
-        if (!trip) {
-          return res.status(404).send('Trip not found');
-        }
-  
-        let participant = await Participant.findOne({ userId: participantId });
-        if (!participant) {
-          participant = new Participant({ userId: participantId, team: teamName });
-          await participant.save();
-        }
-  
-        // Remove the participant from any existing teams
-        trip.teams.forEach(team => {
-          const index = team.participants.indexOf(participant._id);
-          if (index !== -1) {
-            team.participants.splice(index, 1);
-          }
-        });
-  
-        // Add the participant to the new team
-        const team = trip.teams.find(team => team.teamName === teamName);
-        if (team) {
-          team.participants.push(participant._id);
-          participant.team = teamName;
-          await participant.save();
-        } else {
-          return res.status(404).send('Team not found');
-        }
-  
-        await trip.save();
-  
-        const io = req.app.get('io');
-        io.emit('teamChange', { tripId, teams: trip.teams });
-  
-        res.status(200).send(`Participant added to team ${teamName}`);
-      } catch (error) {
-        console.log(error);
-        res.status(500).send("Server error");
+    try {
+      const trip = await Trip.findById(tripId);
+      if (!trip) {
+        return res.status(404).send('Trip not found');
       }
-    },
+  
+      let participant = await Participant.findOne({ userId: participantId });
+      if (!participant) {
+        participant = new Participant({ userId: participantId, team: teamName });
+        await participant.save();
+      }
+  
+      // Remove the participant from any existing teams
+      trip.teams.forEach(team => {
+        const index = team.participants.indexOf(participant._id);
+        if (index !== -1) {
+          team.participants.splice(index, 1);
+        }
+      });
+  
+      // Add the participant to the new team
+      const team = trip.teams.find(team => team.teamName === teamName);
+      if (team) {
+        team.participants.push(participant._id);
+        participant.team = teamName;
+        await participant.save();
+      } else {
+        return res.status(404).send('Team not found');
+      }
+  
+      await trip.save();
+  
+      const io = req.app.get('io');
+      io.emit('teamChange', { tripId, teams: trip.teams });
+      io.emit('participantJoined', { tripId, teamName, participantId });
+  
+      res.status(200).send(`Participant added to team ${teamName}`);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Server error");
+    }
+  },
+  
   
     updateParticipantScore: async (req, res) => {
       const { participantId, score, accomplishedMissions } = req.body;
